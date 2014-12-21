@@ -1,0 +1,5 @@
+Django==1.7.1
+django-debug-toolbar==1.2.2
+django-grappelli==2.6.3
+psycopg2==2.5.4
+sqlparse==0.1.14
