@@ -58,10 +58,10 @@ MIDDLEWARE_CLASSES = (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'ticketus.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'ticketus.wsgi.application'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -112,7 +112,7 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 # Try and import the local_settings
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 
