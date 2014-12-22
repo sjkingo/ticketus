@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'grappelli',
     'django.contrib.admin',
     'debug_toolbar',
+    'ticketus.core',
 )
 
 # A sample logging configuration. The only tangible logging
