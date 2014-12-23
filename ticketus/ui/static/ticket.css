@@ -1,24 +1,17 @@
 .jumbotron {
     margin-bottom: 0;
+    padding: 20px 0 40px 0;
 }
 
 .ticket-meta {
     margin-bottom: 30px;
 }
 
-.comment-box {
-    padding: 20px;
-    border: 1px solid #eee;
+.comments .panel {
+    margin-bottom: 0;
     border-left-width: 5px;
     border-radius: 3px;
     border-left-color: #5bc0de;
-}
-.comment-box .meta {
-    font-family: "Raleway", sans-serif;
-    font-weight: 700;
-    color: #5bc0de;
-    font-size: 16px;
-    margin-bottom: 10px;
 }
 
 .comment-join {

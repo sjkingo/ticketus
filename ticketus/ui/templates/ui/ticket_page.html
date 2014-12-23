@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block jumbotron_inner %}
-    <h1>{{ ticket.id }}: {{ ticket.title }}</h1>
+    <h1><a href="{{ ticket.get_absolute_url }}"><span class="glyphicon glyphicon-link small"></span></a> {{ ticket.id }}: {{ ticket.title }}</h1>
     <div class="ticket-meta">
         <div class="row">
             <div class="col-md-3 col-xs-6">Created by:</div>
@@ -28,17 +28,28 @@
 {% block body %}
     {% if ticket.comment_set.count > 0 %}
         {% include "connecter_border.html" %}
-        {% for comment in ticket.comment_set.all %}
-            <div class="row">
-                <div class="comment-box" id="comment-{{ comment.id }}">
-                    <div class="meta">Comment {{ forloop.counter }}: by {{ comment.commenter }} at {{ comment.created_datetime }}{% if comment.updated_datetime %} (edited at {{ comment.updated_datetime }}){% endif %}</div>
-                    {{ comment.text|safe }}
+        <div class="comments">
+            {% for comment in ticket.comment_set.all %}
+            <div class="row" id="comment-{{ forloop.counter }}">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <a href="#comment-{{ forloop.counter }}"><span class="glyphicon glyphicon-link"></span></a> <span class="small">Comment {{ forloop.counter }} at {{ comment.created_datetime }} ({{ comment.commenter }})</span>
+                        </div>
+                        {% if comment.has_been_modified %}
+                        <div class="pull-right">
+                            <span class="small"><span class="glyphicon glyphicon-pencil"></span> Edited at {{ comment.modified_datetime }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">{{ comment.text|safe }}</div>
                 </div>
             </div>
 
             {% if not forloop.last %}
             {% include "connecter_border.html" %}
             {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
