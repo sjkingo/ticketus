@@ -7,6 +7,8 @@ urlpatterns = patterns('',
     url(r'^$', RedirectView.as_view(pattern_name='ticket_list', permanent=False)),
     (r'^ticket/', include('ticketus.ui.urls')),
     (r'^grappelli/', include('grappelli.urls')),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='account_login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='account_logout'),
     (r'^admin/', include(admin.site.urls)),
 )
 
