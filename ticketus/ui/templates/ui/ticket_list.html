@@ -9,7 +9,7 @@
 {% block extra_js %}
 <script>
 $(document).ready(function() {
-    $('table#tickets tr').click(function() {
+    $('table#tickets tr.link').click(function() {
         window.location = $(this).find('a').attr('href');
     }).hover( function() {
         $(this).toggleClass('hover');
@@ -32,7 +32,7 @@ $(document).ready(function() {
     </thead>
     <tbody>
     {% for ticket in tickets %}
-        <tr>
+        <tr class="link">
             <td><a href="{{ ticket.get_absolute_url }}">{{ ticket.id }}</a></td>
             <td>{{ ticket.title }} <span class="badge">{{ ticket.comment_set.count }}</span></td>
             <td>{{ ticket.requester }}</td>
