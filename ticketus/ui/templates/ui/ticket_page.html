@@ -48,15 +48,8 @@
                 <a name="last-comment"></a>
                 {% endif %}
                 <div class="panel panel-default">
-                    <div class="panel-heading clearfix">
-                        <div class="pull-left">
-                            <a href="#comment-{{ forloop.counter }}"><span class="glyphicon glyphicon-link"></span></a> <span class="small">Comment {{ forloop.counter }} at {{ comment.created_datetime }} ({{ comment.commenter }})</span>
-                        </div>
-                        {% if comment.has_been_modified %}
-                        <div class="pull-right">
-                            <span class="small"><span class="glyphicon glyphicon-pencil"></span> Edited at {{ comment.modified_datetime }}</span>
-                        </div>
-                        {% endif %}
+                    <div class="panel-heading">
+                        <a href="#comment-{{ forloop.counter }}"><span class="glyphicon glyphicon-link"></span></a> <span class="small">Comment {{ forloop.counter }} at {{ comment.created_datetime }} ({{ comment.commenter }})</span>
                     </div>
                     <div class="panel-body">{{ comment.text|safe }}</div>
                 </div>
