@@ -32,3 +32,7 @@
 .hover {
     cursor: pointer;
 }
+
+table#tickets {
+    margin-top: 30px;
+}
