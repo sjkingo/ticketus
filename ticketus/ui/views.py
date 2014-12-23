@@ -19,6 +19,6 @@ def post_new_comment(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     form = CommentForm(request.POST)
     if form.is_valid():
-        c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=ticket.requester)
+        c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
         ticket.comment_set.add(c)
     return redirect(ticket)
