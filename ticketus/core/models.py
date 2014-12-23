@@ -26,7 +26,7 @@ class Comment(models.Model):
     commenter = models.ForeignKey(User)
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
-    text = models.TextField()
+    raw_text = models.TextField()
 
     class Meta:
         verbose_name = 'Comment'
