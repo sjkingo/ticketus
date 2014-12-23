@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from mistune import markdown
+
 class Ticket(models.Model):
     requester = models.ForeignKey(User)
     created_datetime = models.DateTimeField(auto_now_add=True)
@@ -41,3 +43,8 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return self.ticket.get_absolute_url() + '#comment-' + self.id
+
+    @property
+    def text(self):
+        """Pass the raw_text field through a Markdown parser and return its result."""
+        return markdown(self.raw_text)

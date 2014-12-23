@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="comment-box" id="comment-{{ comment.id }}">
                     <div class="meta">Comment {{ forloop.counter }}: by {{ comment.commenter }} at {{ comment.created_datetime }}{% if comment.updated_datetime %} (edited at {{ comment.updated_datetime }}){% endif %}</div>
-                    {{ comment.text }}
+                    {{ comment.text|safe }}
                 </div>
             </div>
 
