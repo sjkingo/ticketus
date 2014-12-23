@@ -22,7 +22,7 @@
             <div class="col-md-3 col-xs-6">{% if ticket.updated_datetime %}{{ ticket.updated_datetime }}{% else %}Never edited{% endif %}</div>
         </div>
     </div>
-    <a href="#" class="btn btn-primary">New comment</a>
+    <a href="#new-comment" class="btn btn-primary">New comment</a>
 {% endblock %}
 
 {% block body %}
@@ -52,4 +52,6 @@
             {% endfor %}
         </div>
     {% endif %}
+
+    {% include "includes/new_comment_box.html" %}
 {% endblock %}

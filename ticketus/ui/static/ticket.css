@@ -29,3 +29,23 @@
 table#tickets {
     margin-top: 30px;
 }
+
+#new-comment {
+    margin-top: 50px;
+}
+#new-comment .glyphicon {
+    margin-right: 5px;
+}
+#new-comment .panel-heading {
+    padding: 0;
+}
+#new-comment .nav-tabs {
+    border-bottom: 0;
+}
+#new-comment .nav-tabs>li.active>a,
+#new-comment .nav-tabs>li.active>a:hover, 
+#new-comment .nav-tabs>li.active>a:focus {
+    border: none;
+    border-right: 1px solid #ddd;
+    padding: 11px 15px;
+}
