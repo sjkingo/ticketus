@@ -29,3 +29,17 @@ small, .small {
 .glyphicon {
     top: 3px;
 }
+
+.navbar-brand {
+    font-size: 20px;
+}
+.navbar-nav>li>a,
+.navbar-nav .same-as-a {
+    line-height: 23px;
+}
+/* mimics the above >li>a selecter */
+.navbar-nav .same-as-a {
+    color: rgb(157, 157, 157);
+    display: block;
+    padding: 15px;
+}

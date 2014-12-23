@@ -10,12 +10,25 @@
             <a class="navbar-brand" href="{% url 'ticket_list' %}">Ticketus</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Search tickets" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-info">Search</button>
-            </form>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'ticket_list' %}">View tickets</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav">
+                {% if user.is_authenticated %}
+                <li><span class="same-as-a">Logged in as {{ user }}</span></li>
+                <li><a href="{% url 'account_logout' %}">Log out</a></li>
+                {% else %}
+                <li><a href="{% url 'account_login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search tickets" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </ul>
         </div>
     </div>
 </nav>
