@@ -27,6 +27,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Comment'
         verbose_name_plural = verbose_name + 's'
+        ordering = ['created_datetime']
 
     def __str__(self):
         return 'Comment for ' + repr(self.ticket)
