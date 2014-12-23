@@ -22,7 +22,10 @@
             <div class="col-md-3 col-xs-6">{% if ticket.updated_datetime %}{{ ticket.updated_datetime }}{% else %}Never edited{% endif %}</div>
         </div>
     </div>
-    <a href="#new-comment" class="btn btn-primary">New comment</a>
+    <div class="btn-group" role="group" aria-label="Comment buttons">
+        <a href="#new-comment" class="btn btn-primary">New comment</a>
+        <a href="#last-comment" class="btn btn-default">Go to latest comment</a>
+    </div>
 {% endblock %}
 
 {% block body %}
@@ -31,6 +34,9 @@
         <div class="comments">
             {% for comment in ticket.comment_set.all %}
             <div class="row" id="comment-{{ forloop.counter }}">
+                {% if forloop.last %}
+                <a name="last-comment"></a>
+                {% endif %}
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <div class="pull-left">
