@@ -1,0 +1,12 @@
+<style type="text/css">
+.tags .badge {
+    font-size: 16px;
+    font-weight: 400;
+}
+</style>
+
+<div class="tags">
+    {% for tag in ticket.tag_set.all %}
+    <span class="badge">{{ tag }}</span>
+    {% endfor %}
+</div>

@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'ticketus.core',
     'ticketus.ui',
+    'ticketus.tags',
 )
 
 # A sample logging configuration. The only tangible logging
