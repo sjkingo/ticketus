@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'debug_toolbar',
     'ticketus.core',
+    'ticketus.ui',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -111,18 +112,11 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
-# Enables the web UI in ticketus. You may set this to False in
-# local_settings.py to not load it.
-ENABLE_WEB_UI = True
-
 # Try and import the local_settings
 try:
     from .local_settings import *
 except ImportError:
     pass
-
-if ENABLE_WEB_UI:
-    INSTALLED_APPS += ('ticketus.ui',)
 
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS

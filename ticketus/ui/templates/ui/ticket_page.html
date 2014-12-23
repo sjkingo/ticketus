@@ -30,7 +30,7 @@
         {% include "connecter_border.html" %}
         {% for comment in ticket.comment_set.all %}
             <div class="row">
-                <div class="comment-box">
+                <div class="comment-box" id="comment-{{ comment.id }}">
                     <div class="meta">Comment {{ forloop.counter }}: by {{ comment.commenter }} at {{ comment.created_datetime }}{% if comment.updated_datetime %} (edited at {{ comment.updated_datetime }}){% endif %}</div>
                     {{ comment.text }}
                 </div>

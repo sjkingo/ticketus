@@ -28,3 +28,7 @@
 .border-left {
     border-left: 1px solid #eee;
 }
+
+.hover {
+    cursor: pointer;
+}
