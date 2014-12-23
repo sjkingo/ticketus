@@ -24,7 +24,9 @@
     </div>
     <div class="btn-group" role="group" aria-label="Comment buttons">
         <a href="#new-comment" class="btn btn-primary">New comment</a>
+        {% if ticket.comment_set.count > 0 %}
         <a href="#last-comment" class="btn btn-default">Go to latest comment</a>
+        {% endif %}
     </div>
 {% endblock %}
 
