@@ -53,3 +53,7 @@ table#tickets {
     border-right: 1px solid #ddd;
     padding: 11px 15px;
 }
+
+.ticket-header a {
+    color: #333;
+}
