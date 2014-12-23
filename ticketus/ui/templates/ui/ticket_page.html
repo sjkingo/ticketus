@@ -27,7 +27,7 @@
 
 {% block body %}
     {% if ticket.comment_set.count > 0 %}
-        {% include "connecter_border.html" %}
+        {% include "includes/connecter_border.html" %}
         <div class="comments">
             {% for comment in ticket.comment_set.all %}
             <div class="row" id="comment-{{ forloop.counter }}">
@@ -47,7 +47,7 @@
             </div>
 
             {% if not forloop.last %}
-            {% include "connecter_border.html" %}
+            {% include "includes/connecter_border.html" %}
             {% endif %}
             {% endfor %}
         </div>
