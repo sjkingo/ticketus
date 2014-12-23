@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block extra_css %}
+<link href="{% static "ticket.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block jumbotron_inner %}
+    <h1>{{ ticket.id }}: {{ ticket.title }}</h1>
+    <div class="ticket-meta">
+        <div class="row">
+            <div class="col-md-3 col-xs-6">Created by:</div>
+            <div class="col-md-3 col-xs-6">{{ ticket.requester }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-xs-6">Created at:</div>
+            <div class="col-md-3 col-xs-6">{{ ticket.created_datetime }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-xs-6">Edited at:</div>
+            <div class="col-md-3 col-xs-6">{% if ticket.updated_datetime %}{{ ticket.updated_datetime }}{% else %}Never edited{% endif %}</div>
+        </div>
+    </div>
+    <a href="#" class="btn btn-primary">New comment</a>
+{% endblock %}
+
+{% block body %}
+    
+    {% if ticket.comment_set.count == 0 %}
+    <p>No comments yet.</p>
+    {% else %}
+        {% include "connecter_border.html" %}
+
+        {% for comment in ticket.comment_set.all %}
+            <div class="row">
+                <div class="comment-box">
+                    <div class="meta">Comment {{ forloop.counter }}: by {{ comment.commenter }} at {{ comment.created_datetime }}{% if comment.updated_datetime %} (edited at {{ comment.updated_datetime }}){% endif %}</div>
+                    {{ comment.text }}
+                </div>
+            </div>
+
+            {% if not forloop.last %}
+            {% include "connecter_border.html" %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

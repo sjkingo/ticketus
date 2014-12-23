@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('',
-    # url(r'^$', 'app.views.home', name='home'),
-    # url(r'^another_app/', include('another_app.urls')),
+urlpatterns = patterns('ticketus.ui.views',
+    url(r'^(?P<ticket_id>\d+)/$', 'ticket_page', name='ticket'),
 )
