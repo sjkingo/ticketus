@@ -16,9 +16,9 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="comment-tab">
-                            <form>
+                            <form method="post" action="{% url 'post_new_comment' ticket_id=ticket.id %}">{% csrf_token %}
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="11" id="comment-text" oninput="this.editor.update()"></textarea>
+                                    <textarea class="form-control" rows="11" name="raw_text" id="comment-text" oninput="this.editor.update()"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
