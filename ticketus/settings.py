@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'ticketus.core',
     'ticketus.ui',
     'ticketus.tags',
+    'ticketus.accounts',
 )
 
 # A sample logging configuration. The only tangible logging
