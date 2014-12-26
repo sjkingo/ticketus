@@ -23,6 +23,13 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse('ticket', args=[self.id])
 
+    def add_tags(self, tag_list):
+        """Given a list of tag names, create tags for them."""
+        for tag in tag_list:
+            if self.tag_set.filter(tag_name=tag).exists():
+                continue
+            self.tag_set.create(tag_name=tag)
+
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket)
     commenter = models.ForeignKey(User)

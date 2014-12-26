@@ -1,10 +1,3 @@
-<style type="text/css">
-.tags .badge {
-    font-size: 16px;
-    font-weight: 400;
-}
-</style>
-
 <div class="tags">
     {% for tag in ticket.tag_set.all %}
     <a href="#"><span class="badge"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</span></a>

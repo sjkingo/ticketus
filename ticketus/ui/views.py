@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 
 from ticketus.core.models import *
 from ticketus.core.forms import *
+from ticketus.tags.models import tags_by_occurence_count
 
 def ticket_list(request, template='ui/ticket_list.html'):
     tickets = Ticket.objects.all()
@@ -35,8 +36,11 @@ def new_ticket(request, template='ui/new_ticket.html'):
         if form.is_valid():
             t = Ticket(title=form.cleaned_data['title'], requester=request.user)
             t.save()
+            t.add_tags(form.cleaned_data['tags'])
             c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
             t.comment_set.add(c)
             return redirect(t)
+
     # don't pass the form instance in as we are manually creating it in the template
-    return render(request, template, {})
+    context = {'top_tags': tags_by_occurence_count()}
+    return render(request, template, context)

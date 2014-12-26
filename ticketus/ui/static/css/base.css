@@ -43,3 +43,7 @@ small, .small {
     display: block;
     padding: 15px;
 }
+
+textarea.no-resize {
+    resize: none;
+}
