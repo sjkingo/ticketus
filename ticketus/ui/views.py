@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 
@@ -15,6 +16,7 @@ def ticket_page(request, ticket_id, template='ui/ticket_page.html'):
     return render(request, template, context)
 
 @require_POST
+@login_required
 def post_new_comment(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     form = CommentForm(request.POST)

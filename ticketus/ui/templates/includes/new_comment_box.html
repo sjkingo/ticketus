@@ -6,6 +6,7 @@
     <div role="tabpanel">
         <div id="new-comment">
             <h4>Write a new comment</h4>
+            {% if user.is_authenticated %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs" role="tablist">
@@ -29,6 +30,10 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <p>Please log in to post a comment.</p>
+            <a href="{% url 'account_login' %}?next={{ ticket.get_absolute_url }}#new-comment" class="btn btn-primary">Log in</a>
+            {% endif %}
         </div>
     </div>
 </div>
