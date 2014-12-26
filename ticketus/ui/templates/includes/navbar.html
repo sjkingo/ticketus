@@ -17,7 +17,7 @@
                 <ul class="nav navbar-nav">
                 {% if user.is_authenticated %}
                 <li><span class="same-as-a">Logged in as {{ user }}</span></li>
-                <li><a href="{% url 'account_logout' %}">Log out</a></li>
+                <li><a href="{% url 'account_logout' %}?next={{ request.path }}">Log out</a></li>
                 {% else %}
                 <li><a href="{% url 'account_login' %}?next={{ request.path }}">Log in</a></li>
                 {% endif %}

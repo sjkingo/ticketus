@@ -8,7 +8,8 @@ urlpatterns = patterns('',
     (r'^ticket/', include('ticketus.ui.urls')),
     (r'^grappelli/', include('grappelli.urls')),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='account_login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='account_logout'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': 'ticket_list'},
+            name='account_logout'),
     (r'^admin/', include(admin.site.urls)),
 )
 

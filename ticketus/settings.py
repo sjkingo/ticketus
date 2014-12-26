@@ -78,10 +78,14 @@ INSTALLED_APPS = (
     'ticketus.accounts',
 )
 
+# Add the `request` dict to all pages
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+# Redirect to the the root page after logging in if no next parameter is given
+LOGIN_REDIRECT_URL = '/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

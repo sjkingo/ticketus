@@ -14,7 +14,7 @@
 
 <form class="form-inline" method="post" action="{% url 'account_login' %}">
     {% csrf_token %}
-    <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% url 'ticket_list' %}{% endif %}">
+    <input type="hidden" name="next" value="{{ next }}">
     <div class="form-group">
         <label for="{{ form.username.id_for_label }}" class="sr-only">{{ form.username.label_tag }}</label>
         <input type="text" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" class="form-control" placeholder="Username" autofocus="autofocus">
