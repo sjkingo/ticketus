@@ -4,7 +4,7 @@ from django.utils.html import escape
 class TicketForm(forms.Form):
     title = forms.CharField()
     tags = forms.CharField(widget=forms.Textarea, required=False)
-    raw_text = forms.CharField(widget=forms.Textarea)
+    raw_text = forms.CharField(widget=forms.Textarea, required=False)
 
     def clean_title(self):
         return escape(self.cleaned_data['title'])

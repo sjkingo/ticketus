@@ -41,8 +41,9 @@ def new_ticket(request, template='ui/new_ticket.html'):
             t = Ticket(title=form.cleaned_data['title'], requester=request.user)
             t.save()
             t.add_tags(form.cleaned_data['tags'])
-            c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
-            t.comment_set.add(c)
+            if form.cleaned_data['raw_text']:
+                c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
+                t.comment_set.add(c)
             return redirect(t)
 
     # don't pass the form instance in as we are manually creating it in the template
