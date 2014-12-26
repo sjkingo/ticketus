@@ -30,6 +30,8 @@
 <body>
     {% include "includes/navbar.html" %}
 
+    {% block body_override %}
+
     {% block jumbotron_wrapper %}
     <div class="jumbotron">
         <div class="container">
@@ -41,6 +43,8 @@
     <div class="container">
         {% block body %}{% endblock %}
     </div>
+
+    {% endblock %}
 
     <footer>
         <hr>

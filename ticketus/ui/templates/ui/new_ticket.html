@@ -6,6 +6,65 @@
 <link href="{% static "css/ticket.css" %}" rel="stylesheet">
 {% endblock %}
 
-{% block jumbotron_inner %}
+{% block body_override %}
+
+<form method="post" action="{% url 'new_ticket' %}">
+{% csrf_token %}
+
+<div class="jumbotron">
+    <div class="container">
+        <script src="{% static "js/markdown.min.js" %}"></script>
+        <script src="{% static "js/comment_preview.js" %}"></script>
+
+        <div class="row">
+            <h2>Write a new ticket</h2>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input required type="text" class="form-control" id="id_title" name="title" placeholder="Type the ticket's title here">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div role="tabpanel">
+            <div id="new-comment">
+                <h3>Add your comment here</h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#comment-tab" aria-controls="comment-tab" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Write comment</a></li>
+                            <li role="presentation"><a href="#preview-tab" aria-controls="preview-tab" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-eye-open"></span> Preview</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="comment-tab">
+                                    <div class="form-group">
+                                        <textarea required class="form-control" rows="11" name="raw_text" id="comment-text" oninput="this.editor.update()"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="preview-tab">
+                                <div id="preview-html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+
+</form>
 
 {% endblock %}

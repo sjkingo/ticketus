@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 
 from ticketus.core.models import *
-from ticketus.core.forms import CommentForm
+from ticketus.core.forms import *
 
 def ticket_list(request, template='ui/ticket_list.html'):
     tickets = Ticket.objects.all()
@@ -24,3 +24,19 @@ def post_new_comment(request, ticket_id):
         c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
         ticket.comment_set.add(c)
     return redirect(ticket)
+
+@login_required
+def new_ticket(request, template='ui/new_ticket.html'):
+    """
+    Post a new ticket (and comment).
+    """
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            t = Ticket(title=form.cleaned_data['title'], requester=request.user)
+            t.save()
+            c = Comment(raw_text=form.cleaned_data['raw_text'], commenter=request.user)
+            t.comment_set.add(c)
+            return redirect(t)
+    # don't pass the form instance in as we are manually creating it in the template
+    return render(request, template, {})
