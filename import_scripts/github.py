@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+
+"""Import script for GitHub Issues to Ticketus.
+
+This script requires some added libraries. If they are not installed you will
+be prompted to install them:
+
+ * -e git+https://github.com/sigmavirus24/github3.py.git#egg=github3.py
+ * html2text
+ * pytz
+
+This is *not* a destructive operation. The script will not delete any existing
+issues, instead each issue will be created with a 'github-X' tag, which
+specifies the issue # on GitHub. This means you do not need to ensure
+uniqueness with any existing tickets. Each time the script is run, new tickets
+will be added but assuming the 'github-X' tag stays intact, no duplicates will
+be created.
+
+You must specify a repository owner and repository name as arguments, and
+optionally a username and password if the repository is private.
+
+If 2FA is enabled on your account, you must specify --2fa and you will be
+prompted for your authentication code. NOTE that this is interactive!!!
+"""
+
+# Check that the github3.py library is installed.
+_gh3_install_cmd = 'pip install -e git+https://github.com/sigmavirus24/github3.py.git#egg=github3.py'
+try:
+    from github3 import GitHub, login, __version__ as __gh_version__
+except ImportError:
+    print('ERROR: github3.py is not installed. Please run (inside a virtualenv):')
+    print('  ' + _gh3install_cmd)
+    exit(1)
+if not __gh_version__.startswith('1.'):
+    print('ERROR: github3.py version 1.0 or higher is not installed. Instead version {} is installed.'.format(github3.__version__))
+    print('Please remove it and run (inside a virtualenv):')
+    print('  ' + _gh3_install_cmd)
+    exit(1)
+
+# Import django
+import os.path, sys
+sys.path.append(os.path.realpath('..'))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ticketus.settings")
+import django
+django.setup()
+
+import datetime
+from html2text import html2text
+import pytz
+
+from django.contrib.auth.models import User
+from ticketus.core.models import *
+
+def tag_to_ghi(tag_name):
+    return int(tag_name.split('_')[1])
+
+def ghi_to_tag(issue):
+    return 'github_{}'.format(issue['number'])
+
+def labels_list(issue):
+    return [x['name'] for x in issue['labels']]
+
+def get_user(username):
+    user, created = User.objects.get_or_create(username=username)
+    return user
+
+_tz = pytz.timezone('Australia/Brisbane')
+def timestamp_to_local(timestamp):
+    naive = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=pytz.utc)
+    return naive.astimezone(_tz)
+
+def authenticate_with_github(username=None, password=None, code=None):
+    if username is not None and password is not None:
+        print(' (auth given as {}:{})'.format(username, '*'*len(password)))
+
+    def _2fa_func():
+        return code
+
+    if code:
+        return login(username, password, two_factor_callback=_2fa_func)
+    else:
+        return GitHub(username, password)
+
+def import_from_github(repo_owner, repo_name, **kwargs):
+    print('Will import from \'{}/{}\''.format(repo_owner, repo_name))
+    gh = authenticate_with_github(**kwargs)
+    print('{} remaining API accesses before rate-limited'.format(gh.ratelimit_remaining))
+
+    issues = list(gh.issues_on(repo_owner, repo_name))
+    for issue in issues:
+        d = issue.as_dict()
+
+        # Parse tags
+        tags = labels_list(d)
+        issue_tag = ghi_to_tag(d)
+        tags.append(issue_tag)
+        if issue.is_closed():
+            tags.append('closed')
+
+        # Don't update existing tickets
+        existing_tickets = Ticket.objects.filter(tag__tag_name=issue_tag).count()
+        if existing_tickets > 0:
+            print('TODO: Found {} existing ticket(s) tagged {}, not updating'.format(existing_tickets, issue_tag))
+            continue
+
+        # Parse the remaining fields
+        user = get_user(d['user']['login'])
+        title = d['title']
+        created_at = timestamp_to_local(d['created_at'])
+        updated_at = timestamp_to_local(d['updated_at'])
+        first_comment = body_html_to_md(d)
+
+        # Create the ticket, tags and first comment
+        t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, requester=user)
+        t.save()
+        t.add_tags(tags)
+        c = Comment(raw_text=first_comment, commenter=user)
+        t.comment_set.add(c)
+
+        # Add remaining comments
+        for comment in issue.comments():
+            d = comment.as_dict()
+            c = Comment(raw_text=html2text(d['body_html']), commenter=get_user(d['user']['login']))
+            t.comment_set.add(c)
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('repo_owner', metavar='REPO_OWNER', 
+            help='The repository owner, e.g. sjkingo')
+    parser.add_argument('repo_name', metavar='REPO_NAME',
+            help='The repository name, e.g. ticketus')
+    parser.add_argument('--username',
+            help='(optional) The username if the repository is private')
+    parser.add_argument('--password',
+            help='(optional) The password if the repository is private')
+    parser.add_argument('--2fa', action='store_true', dest='needs_2fa_code',
+            help='(optional) Prompt for a 2FA code if your account requires it')
+
+    args = parser.parse_args()
+    code = None
+    if args.needs_2fa_code:
+        code = input('--2fa given, please enter your 2FA code (it will not be saved): ')
+    import_from_github(args.repo_owner, args.repo_name, username=args.username, password=args.password, code=code)
