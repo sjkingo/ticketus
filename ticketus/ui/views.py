@@ -1,38 +1,23 @@
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 
+from .utils import render_ticket_list
 from ticketus.core.models import *
 from ticketus.core.forms import *
 from ticketus.tags.models import tags_by_occurence_count
 
-def ticket_list(request, tag_filter=None, template='ui/ticket_list.html'):
-    if tag_filter is None:
-        tickets_list = Ticket.objects.all()
-    else:
-        tickets_list = Ticket.objects.filter(tag__tag_name=tag_filter).all()
-    
-    paginator = Paginator(tickets_list, settings.TICKETS_PER_PAGE)
-    try:
-        page = int(request.GET.get('page'))
-    except TypeError:
-        page = 1
+def ticket_list_all(request):
+    results = Ticket.objects.all()
+    return render_ticket_list(request, results)
 
-    try:
-        tickets = paginator.page(page)
-    except PageNotAnInteger:
-        tickets = paginator.page(1)
-    except EmptyPage:
-        tickets = paginator.page(paginator.num_pages)
-
-    context = {'tickets': tickets,
-               'tag_filter': tag_filter,
-               'pages': range(1, paginator.num_pages + 1),
-               'previous_page': page - 1,
-               'next_page': page + 1}
-    return render(request, template, context)
+def ticket_list_by_user(request, username):
+    results = Ticket.objects.filter(requester__username=username).all()
+    context = {'filter': username,
+               'filter_name': 'user',
+               'filter_label': 'by user'}
+    return render_ticket_list(request, results, context_to_add=context)
 
 def ticket_page(request, ticket_id, template='ui/ticket_page.html'):
     ticket = get_object_or_404(Ticket, id=ticket_id)

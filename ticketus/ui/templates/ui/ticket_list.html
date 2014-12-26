@@ -26,11 +26,11 @@ $(document).ready(function() {
 <div class="row">
     <table class="table table-hover" id="tickets">
         <thead>
-            {% if tag_filter %}
+            {% if filter and filter_label and filter_name %}
             <tr>
                 <th colspan="4">
                     <div class="tags">
-                        <p>Showing tickets tagged <span class="badge"><span class="glyphicon glyphicon-tag"></span> {{ tag_filter }}</span></p>
+                        <p>Showing tickets {{ filter_label }} <span class="badge"><span class="glyphicon glyphicon-{{ filter_name }}"></span> {{ filter }}</span></p>
                     </div>
                 </th>
             </tr>

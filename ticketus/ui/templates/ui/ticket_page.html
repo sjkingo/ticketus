@@ -15,7 +15,7 @@
     <div class="ticket-meta">
         <div class="row">
             <div class="col-md-2 col-xs-4">Created by:</div>
-            <div class="col-md-6 col-xs-8">{{ ticket.requester }}</div>
+            <div class="col-md-6 col-xs-8"><a href="{% url 'ticket_list_by_user' username=ticket.requester %}"><span class="badge"><span class="glyphicon glyphicon-user"></span> {{ ticket.requester }}</a></span></div>
         </div>
         <div class="row">
             <div class="col-md-2 col-xs-4">Created at:</div>
