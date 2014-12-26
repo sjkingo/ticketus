@@ -7,6 +7,6 @@
 
 <div class="tags">
     {% for tag in ticket.tag_set.all %}
-    <span class="badge">{{ tag }}</span>
+    <a href="#"><span class="badge"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</span></a>
     {% endfor %}
 </div>
