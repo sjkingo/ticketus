@@ -55,6 +55,25 @@ $(document).ready(function() {
         {% endfor %}
         </tbody>
     </table>
+
+    <nav class="text-center">
+        <ul class="pagination">
+            {% if tickets.has_previous %}
+                <li><a href="?page={{ previous_page }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            {% endif %}
+            {% for page_num in pages %}
+                <li{% if page_num == tickets.number %} class="active"{% endif %}><a href="?page={{ page_num }}">{{ page_num }} <span class="sr-only">(current)</span></a></li>
+            {% endfor %}
+            {% if tickets.has_next %}
+                <li><a href="?page={{ next_page }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 </div>
 
 {% endblock %}

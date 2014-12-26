@@ -116,6 +116,8 @@ LOGGING = {
     }
 }
 
+TICKETS_PER_PAGE = 20
+
 # Django-debug-toolbar settings.
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
