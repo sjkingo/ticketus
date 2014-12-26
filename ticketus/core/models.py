@@ -13,6 +13,7 @@ class Ticket(models.Model):
     class Meta:
         verbose_name = 'Ticket'
         verbose_name_plural = verbose_name + 's'
+        ordering = ['-created_datetime', 'title']
 
     def __str__(self):
         return self.title
