@@ -1,5 +1,5 @@
 <div class="tags">
     {% for tag in ticket.tag_set.all %}
-    <a href="#"><span class="badge"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</span></a>
+    <a href="{% url 'filter_by_tag' tag_name=tag %}"><span class="badge"><span class="glyphicon glyphicon-tag"></span> {{ tag }}</span></a>
     {% endfor %}
 </div>

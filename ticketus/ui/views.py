@@ -6,9 +6,13 @@ from ticketus.core.models import *
 from ticketus.core.forms import *
 from ticketus.tags.models import tags_by_occurence_count
 
-def ticket_list(request, template='ui/ticket_list.html'):
-    tickets = Ticket.objects.all()
-    context = {'tickets': tickets}
+def ticket_list(request, tag_filter=None, template='ui/ticket_list.html'):
+    if tag_filter is None:
+        tickets = Ticket.objects.all()
+    else:
+        tickets = Ticket.objects.filter(tag__tag_name=tag_filter).all()
+    context = {'tickets': tickets,
+               'tag_filter': tag_filter}
     return render(request, template, context)
 
 def ticket_page(request, ticket_id, template='ui/ticket_page.html'):
