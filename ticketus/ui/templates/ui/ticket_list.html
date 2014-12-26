@@ -47,7 +47,7 @@ $(document).ready(function() {
         {% for ticket in tickets %}
             <tr class="link">
                 <td><a href="{{ ticket.get_absolute_url }}">{{ ticket.id }}</a></td>
-                <td><span class="badge">{{ ticket.comment_set.count }}</span></td>
+                <td><span class="badge" title="{{ ticket.comment_set.count }} comment{% if ticket.comment_set.count != 1 %}s{% endif %}">{{ ticket.comment_set.count }}</span></td>
                 <td>{{ ticket.title }}</td>
                 <td>{{ ticket.requester }}</td>
                 <td>{{ ticket.created_datetime }}</td>
