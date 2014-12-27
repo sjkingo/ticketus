@@ -20,5 +20,8 @@ class Tag(models.Model):
         return '<Tag \'{}\' for {}'.format(self.tag_name, self.ticket)
 
 def tags_by_occurence_count(n=10):
-    o = Tag.objects.values('tag_name').annotate(count=models.Count('tag_name')).order_by('-count')
+    o = Tag.objects.values('tag_name') \
+            .exclude(tag_name__startswith='github') \
+            .annotate(count=models.Count('tag_name')) \
+            .order_by('-count')
     return [v['tag_name'] for v in list(o)[:n+1]]
