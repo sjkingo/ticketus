@@ -6,15 +6,15 @@ from mistune import markdown
 
 class Ticket(models.Model):
     requester = models.ForeignKey(User)
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    modified_datetime = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     imported_key = models.CharField(max_length=255, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Ticket'
         verbose_name_plural = verbose_name + 's'
-        ordering = ['-created_datetime', 'title']
+        ordering = ['-created_at', 'title']
 
     def __str__(self):
         return self.title
@@ -35,14 +35,14 @@ class Ticket(models.Model):
 class Comment(models.Model):
     ticket = models.ForeignKey(Ticket)
     commenter = models.ForeignKey(User)
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    modified_datetime = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
     raw_text = models.TextField()
 
     class Meta:
         verbose_name = 'Comment'
         verbose_name_plural = verbose_name + 's'
-        ordering = ['created_datetime']
+        ordering = ['created_at']
 
     def __str__(self):
         return 'Comment for ' + repr(self.ticket)

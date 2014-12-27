@@ -50,7 +50,7 @@ $(document).ready(function() {
                 <td><span class="badge" title="{{ ticket.comment_set.count }} comment{% if ticket.comment_set.count != 1 %}s{% endif %}">{{ ticket.comment_set.count }}</span></td>
                 <td>{{ ticket.title }}</td>
                 <td>{{ ticket.requester }}</td>
-                <td>{{ ticket.created_datetime }}</td>
+                <td>{{ ticket.created_at }}</td>
             </tr>
         {% endfor %}
         </tbody>

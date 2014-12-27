@@ -19,11 +19,11 @@
         </div>
         <div class="row">
             <div class="col-md-2 col-xs-4">Created at:</div>
-            <div class="col-md-6 col-xs-8">{{ ticket.created_datetime }}</div>
+            <div class="col-md-6 col-xs-8">{{ ticket.created_at }}</div>
         </div>
         <div class="row">
             <div class="col-md-2 col-xs-4">Edited at:</div>
-            <div class="col-md-6 col-xs-8">{% if ticket.updated_datetime %}{{ ticket.updated_datetime }}{% else %}Never edited{% endif %}</div>
+            <div class="col-md-6 col-xs-8">{% if ticket.edited_at %}{{ ticket.edited_at }}{% else %}Never edited{% endif %}</div>
         </div>
         {% if ticket.imported_key %}
         <div class="row">
@@ -60,7 +60,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <div class="pull-left">
-                            <span class="small"><strong>Comment {{ forloop.counter }}</strong> at {{ comment.created_datetime }} ({{ comment.commenter }})</span>
+                            <span class="small"><strong>Comment {{ forloop.counter }}</strong> at {{ comment.created_at }} ({{ comment.commenter }})</span>
                         </div>
                         <div class="pull-right">
                             <a href="#comment-{{ forloop.counter }}" title="Permalink"><span class="glyphicon glyphicon-link"></span></a>
