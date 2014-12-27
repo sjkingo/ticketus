@@ -2,12 +2,28 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
+import datetime
 from mistune import markdown
 
-class Ticket(models.Model):
+class TimestampModel(models.Model):
+    created_at = models.DateTimeField()
+    edited_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        """Update created and edited timestamps"""
+        is_created = self.pk is None
+        now = datetime.datetime.now()
+        if is_created:
+            self.created_at = now
+        else:
+            self.edited_at = now
+        super(TimestampModel, self).save(*args, **kwargs)
+
+class Ticket(TimestampModel):
     requester = models.ForeignKey(User)
-    created_at = models.DateTimeField(auto_now_add=True)
-    edited_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     imported_key = models.CharField(max_length=255, blank=True, unique=True)
 
@@ -32,11 +48,9 @@ class Ticket(models.Model):
                 continue
             self.tag_set.create(tag_name=tag)
 
-class Comment(models.Model):
+class Comment(TimestampModel):
     ticket = models.ForeignKey(Ticket)
     commenter = models.ForeignKey(User)
-    created_at = models.DateTimeField(auto_now_add=True)
-    edited_at = models.DateTimeField(auto_now=True)
     raw_text = models.TextField()
 
     class Meta:
