@@ -13,13 +13,15 @@ class TimestampModel(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        """Update created and edited timestamps"""
+        """Update created and edited timestamps if they are not provided"""
         is_created = self.pk is None
         now = datetime.datetime.now()
         if is_created:
-            self.created_at = now
+            if not self.created_at:
+                self.created_at = now
         else:
-            self.edited_at = now
+            if not self.edited_at:
+                self.edited_at = now
         super(TimestampModel, self).save(*args, **kwargs)
 
 class Ticket(TimestampModel):

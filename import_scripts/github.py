@@ -112,11 +112,11 @@ def import_from_github(repo_owner, repo_name, **kwargs):
         user = get_user(d['user']['login'])
         title = d['title']
         created_at = timestamp_to_local(d['created_at'])
-        updated_at = timestamp_to_local(d['updated_at'])
+        edited_at = timestamp_to_local(d['updated_at'])
         first_comment = html2text(d['body_html'])
 
         # Create the ticket, tags and first comment
-        t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, 
+        t = Ticket(title=title, created_at=created_at, edited_at=edited_at, 
                 requester=user, imported_key=imported_key)
         t.save()
         t.add_tags(tags)
@@ -126,7 +126,8 @@ def import_from_github(repo_owner, repo_name, **kwargs):
         # Add remaining comments
         for comment in issue.comments():
             d = comment.as_dict()
-            c = Comment(raw_text=html2text(d['body_html']), commenter=get_user(d['user']['login']))
+            c = Comment(raw_text=html2text(d['body_html']), commenter=get_user(d['user']['login']),
+                    created_at=d['created_at'], edited_at=d['updated_at'])
             t.comment_set.add(c)
 
         print('Added ticket {} with {} comments'.format(repr(t), t.comment_set.count()))

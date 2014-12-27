@@ -97,7 +97,7 @@ def import_from_freshdesk(helpdesk_domain, api_key):
             # Extract ticket fields
             title = ticket['subject']
             created_at = timestamp_to_datetime(ticket['created_at'])
-            updated_at = timestamp_to_datetime(ticket['updated_at'])
+            edited_at = timestamp_to_datetime(ticket['updated_at'])
             first_comment = html2text(ticket['description_html'])
             tags = ticket['tags']
             unique_uri = d['url_prefix'] + '/helpdesk/tickets/{}'.format(ticket['display_id'])
@@ -108,7 +108,7 @@ def import_from_freshdesk(helpdesk_domain, api_key):
                 tags.append('closed')
 
             # Create the ticket, tags and first comment
-            t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, 
+            t = Ticket(title=title, created_at=created_at, edited_at=updated_at, 
                     requester=user, imported_key=unique_uri)
             t.save()
             t.add_tags(tags)
@@ -127,8 +127,8 @@ def import_from_freshdesk(helpdesk_domain, api_key):
                 comment_updated_at = timestamp_to_datetime(comment['updated_at'])
                 comment_body_text = html2text(comment['body_html'])
 
-                c = Comment(raw_text=comment_body_text, created_datetime=comment_created_at,
-                        modified_datetime=comment_updated_at, commenter=comment_user)
+                c = Comment(raw_text=comment_body_text, created_at=comment_created_at,
+                        edited_at=comment_updated_at, commenter=comment_user)
                 t.comment_set.add(c)
 
             print('Added ticket {} with {} comments'.format(repr(t), t.comment_set.count()))
