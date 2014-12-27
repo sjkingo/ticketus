@@ -23,9 +23,15 @@ Installation
    $ cd ticketus && source bin/activate
    ```
 
-2. Edit the configuration (copy `local_settings.py.example` to `local_settings.py` and edit).
+2. Install the system requirements inside the virtualenv:
 
-3. Create and populate the database:
+   ```
+   $ pip install -r requirements.txt
+   ```
+
+3. Edit the configuration (copy `local_settings.py.example` to `local_settings.py` and edit).
+
+4. Create and populate the database:
 
    ```
    $ createdb ticketus
@@ -33,7 +39,7 @@ Installation
    $ python manage.py collectstatic
    ```
 
-4. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
+5. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
 
-5. Point your WSGI server to `ticketus.wsgi.application`
+6. Point your WSGI server to `ticketus.wsgi.application`
 
