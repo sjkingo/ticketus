@@ -1,10 +1,10 @@
 Ticketus
---------
+========
 
 Ticketus is a simple, no-frills ticketing system for helpdesks. For more information, see [ticketus.org](http://ticketus.org/).
 
 Requirements
-============
+------------
 
 * Python 3.3+
 * PostgreSQL 9.3+
@@ -12,7 +12,7 @@ Requirements
 * Web server (e.g. nginx or Apache2)
 
 Installation
-============
+------------
 
 1. Activate a virtualenv:
 
