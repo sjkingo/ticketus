@@ -25,6 +25,12 @@
             <div class="col-md-2 col-xs-4">Edited at:</div>
             <div class="col-md-6 col-xs-8">{% if ticket.updated_datetime %}{{ ticket.updated_datetime }}{% else %}Never edited{% endif %}</div>
         </div>
+        {% if ticket.imported_key %}
+        <div class="row">
+            <div class="col-md-2 col-xs-4">Imported from:</div>
+            <div class="col-md-6 col-xs-8"><a href="{{ ticket.imported_key }}">{{ ticket.imported_key }}</a></div>
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-md-2 col-xs-4"><span class="glyphicon glyphicon-tags"></span>Tags:</div>
             <div class="col-md-6 col-xs-8">{% include "includes/ticket_tags.html" %}</div>
