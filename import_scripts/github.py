@@ -3,24 +3,28 @@
 """Import script for GitHub Issues to Ticketus.
 
 This script requires some added libraries. If they are not installed you will
-be prompted to install them:
+need to install them first using pip:
 
  * -e git+https://github.com/sigmavirus24/github3.py.git#egg=github3.py
  * html2text
  * pytz
 
-This is *not* a destructive operation. The script will not delete any existing
-issues, instead each issue will be created with a 'github-X' tag, which
+This is *not* a destructive operation. This script will not delete any existing
+issues; instead each issue will be created with a 'github-X' tag, which
 specifies the issue # on GitHub. This means you do not need to ensure
 uniqueness with any existing tickets. Each time the script is run, new tickets
-will be added but assuming the 'github-X' tag stays intact, no duplicates will
+will be added, but assuming the 'github-X' tag stays intact, no duplicates will
 be created.
 
 You must specify a repository owner and repository name as arguments, and
-optionally a username and password if the repository is private.
+optionally a username and password if the repository is private. If 2FA is
+enabled on your account, you must specify --2fa and you will be prompted for
+your authentication code. NOTE that this is interactive!!!
 
-If 2FA is enabled on your account, you must specify --2fa and you will be
-prompted for your authentication code. NOTE that this is interactive!!!
+Please note annonymous access (no username and password) is rate-limited heavily
+by GitHub. It is recommended you authenticate to get around this.
+
+Please see https://developer.github.com/v3/#rate-limiting for more information.
 """
 
 # Check that the github3.py library is installed.
@@ -40,7 +44,7 @@ if not __gh_version__.startswith('1.'):
 # Import django
 import os.path, sys
 sys.path.append(os.path.realpath('..'))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ticketus.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ticketus.settings')
 import django
 django.setup()
 
@@ -52,24 +56,41 @@ from django.contrib.auth.models import User
 from ticketus.core.models import *
 
 def tag_to_ghi(tag_name):
+    """
+    Convert tag_name to an issue #:
+    'github_1' -> 1
+    """
     return int(tag_name.split('_')[1])
 
 def ghi_to_tag(issue):
+    """
+    Convert issue # to an tag name:
+    1 -> 'github_1'
+    """
     return 'github_{}'.format(issue['number'])
 
 def labels_list(issue):
+    """Returns a list of labels (tag names) in the given issue."""
     return [x['name'] for x in issue['labels']]
 
 def get_user(username):
+    """Given a username, gets or creates it in the local database and returns
+    the User instance."""
     user, created = User.objects.get_or_create(username=username)
     return user
 
 _tz = pytz.timezone('Australia/Brisbane')
 def timestamp_to_local(timestamp):
+    """Given a str timestamp, convert it to a datetime object with correct
+    timezone information (as GitHub uses UTC)."""
     naive = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=pytz.utc)
     return naive.astimezone(_tz)
 
 def authenticate_with_github(username=None, password=None, code=None):
+    """Performs authentication with GitHub and returns the instance. Note all
+    fields are optional, however if two-factor authentication is enabled on the
+    account, code must be specified.
+    """
     if username is not None and password is not None:
         print(' (auth given as {}:{})'.format(username, '*'*len(password)))
 
@@ -108,7 +129,7 @@ def import_from_github(repo_owner, repo_name, **kwargs):
         title = d['title']
         created_at = timestamp_to_local(d['created_at'])
         updated_at = timestamp_to_local(d['updated_at'])
-        first_comment = body_html_to_md(d)
+        first_comment = html2text(d['body_html'])
 
         # Create the ticket, tags and first comment
         t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, requester=user)
@@ -122,6 +143,8 @@ def import_from_github(repo_owner, repo_name, **kwargs):
             d = comment.as_dict()
             c = Comment(raw_text=html2text(d['body_html']), commenter=get_user(d['user']['login']))
             t.comment_set.add(c)
+
+        print('Added ticket {} with {} comments'.format(repr(t), t.comment_set.count()))
 
 
 if __name__ == '__main__':
