@@ -9,7 +9,7 @@ class Ticket(models.Model):
     created_datetime = models.DateTimeField(auto_now_add=True)
     modified_datetime = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    imported_key = models.CharField(max_length=255, blank=True)
+    imported_key = models.CharField(max_length=255, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Ticket'
