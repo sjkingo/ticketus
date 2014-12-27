@@ -10,11 +10,10 @@ need to install them first using pip:
  * pytz
 
 This is *not* a destructive operation. This script will not delete any existing
-issues; instead each issue will be created with a 'github-X' tag, which
-specifies the issue # on GitHub. This means you do not need to ensure
-uniqueness with any existing tickets. Each time the script is run, new tickets
-will be added, but assuming the 'github-X' tag stays intact, no duplicates will
-be created.
+issues; instead each ticket will be created with the `imported_key` field set
+to the unique URI given by GitHub for each issue.. This means you do not need
+to ensure uniqueness with any existing tickets. Each time the script is run,
+new tickets will be added and no duplicates will be created.
 
 You must specify a repository owner and repository name as arguments, and
 optionally a username and password if the repository is private. If 2FA is
@@ -54,20 +53,6 @@ import pytz
 
 from django.contrib.auth.models import User
 from ticketus.core.models import *
-
-def tag_to_ghi(tag_name):
-    """
-    Convert tag_name to an issue #:
-    'github_1' -> 1
-    """
-    return int(tag_name.split('_')[1])
-
-def ghi_to_tag(issue):
-    """
-    Convert issue # to an tag name:
-    1 -> 'github_1'
-    """
-    return 'github_{}'.format(issue['number'])
 
 def labels_list(issue):
     """Returns a list of labels (tag names) in the given issue."""
@@ -110,18 +95,17 @@ def import_from_github(repo_owner, repo_name, **kwargs):
     issues = list(gh.issues_on(repo_owner, repo_name, state='all'))
     for issue in issues:
         d = issue.as_dict()
+        imported_key = d['html_url']
 
         # Parse tags
         tags = labels_list(d)
-        issue_tag = ghi_to_tag(d)
-        tags.append(issue_tag)
         if issue.is_closed():
             tags.append('closed')
 
         # Don't update existing tickets
-        existing_tickets = Ticket.objects.filter(tag__tag_name=issue_tag).count()
+        existing_tickets = Ticket.objects.filter(imported_key=imported_key).count()
         if existing_tickets > 0:
-            print('TODO: Found {} existing ticket(s) tagged {}, not updating'.format(existing_tickets, issue_tag))
+            print('TODO: Found {} existing ticket(s) for {}, not updating'.format(existing_tickets, imported_key))
             continue
 
         # Parse the remaining fields
@@ -132,7 +116,8 @@ def import_from_github(repo_owner, repo_name, **kwargs):
         first_comment = html2text(d['body_html'])
 
         # Create the ticket, tags and first comment
-        t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, requester=user)
+        t = Ticket(title=title, created_datetime=created_at, modified_datetime=updated_at, 
+                requester=user, imported_key=imported_key)
         t.save()
         t.add_tags(tags)
         c = Comment(raw_text=first_comment, commenter=user)
