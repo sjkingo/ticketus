@@ -107,7 +107,7 @@ def import_from_github(repo_owner, repo_name, **kwargs):
     gh = authenticate_with_github(**kwargs)
     print('{} remaining API accesses before rate-limited'.format(gh.ratelimit_remaining))
 
-    issues = list(gh.issues_on(repo_owner, repo_name))
+    issues = list(gh.issues_on(repo_owner, repo_name, state='all'))
     for issue in issues:
         d = issue.as_dict()
 
