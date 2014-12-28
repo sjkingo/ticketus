@@ -22,7 +22,7 @@ Installation
    example, on Fedora:
 
    ```
-   yum install python3 python-virtualenv python3-psycopg2
+   # yum install python3 python-virtualenv python3-psycopg2
    ```
 
 1. Activate a virtualenv (ensure it uses Python 3 as 2.x is not supported):
