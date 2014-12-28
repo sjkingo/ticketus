@@ -49,6 +49,7 @@ Installation
    $ createdb ticketus
    $ python manage.py migrate
    $ python manage.py collectstatic
+   $ python manage.py createsuperuser
    ```
 
 6. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
