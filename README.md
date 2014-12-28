@@ -56,6 +56,7 @@ Installation
 7. Point your WSGI server to `ticketus.wsgi`, e.g.:
 
    ```
+   $ pip install gunicorn
    $ gunicorn ticketus.wsgi
    ```
 
