@@ -3,7 +3,9 @@ Ticketus
 
 Ticketus is a simple, no-frills ticketing system for helpdesks. For more information, see [ticketus.org](http://ticketus.org/).
 
-[![Build Status](https://travis-ci.org/sjkingo/ticketus.svg)](https://travis-ci.org/sjkingo/ticketus)
+The latest "stable" release is `0.5-beta`.
+
+[![Build Status](https://travis-ci.org/sjkingo/ticketus.svg)](https://travis-ci.org/sjkingo/ticketus) [![Requirements Status](https://requires.io/github/sjkingo/ticketus/requirements.svg?branch=master)](https://requires.io/github/sjkingo/ticketus/requirements/?branch=master)
 
 Requirements
 ------------
