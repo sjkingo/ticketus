@@ -18,22 +18,32 @@ Requirements
 Installation
 ------------
 
-1. Activate a virtualenv:
+1. Activate a virtualenv (ensure it uses Python 3 as 2.x is not supported):
 
    ```
    $ virtualenv -p python3 ticketus
    $ cd ticketus && source bin/activate
    ```
 
-2. Install the system requirements inside the virtualenv:
+2. Install the latest "stable" release of ticketus from GitHub:
+
+   ```
+   $ git clone http://github.com/sjkingo/ticketus.git
+   $ cd ticketus
+   $ git checkout v0.5-beta
+   ```
+
+   (if you wish to use the latest bleeding-edge version, you may leave out the last line and instead use `master`.)
+
+3. Install the dependencies:
 
    ```
    $ pip install -r requirements.txt
    ```
 
-3. Edit the configuration (copy `local_settings.py.example` to `local_settings.py` and edit).
+4. Edit the configuration (copy `ticketus/local_settings.py.example` to `ticketus/local_settings.py` and edit).
 
-4. Create and populate the database:
+5. Create and populate the database:
 
    ```
    $ createdb ticketus
@@ -41,7 +51,11 @@ Installation
    $ python manage.py collectstatic
    ```
 
-5. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
+6. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
 
-6. Point your WSGI server to `ticketus.wsgi.application`
+7. Point your WSGI server to `ticketus.wsgi`, e.g.:
+
+   ```
+   $ gunicorn ticketus.wsgi
+   ```
 
