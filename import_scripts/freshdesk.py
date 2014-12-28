@@ -97,7 +97,7 @@ def import_from_freshdesk(helpdesk_domain, api_key):
             # Extract ticket fields
             title = ticket['subject']
             created_at = timestamp_to_datetime(ticket['created_at'])
-            edited_at = timestamp_to_datetime(ticket['updated_at'])
+            updated_at = timestamp_to_datetime(ticket['updated_at'])
             first_comment = html2text(ticket['description_html'])
             tags = ticket['tags']
             unique_uri = d['url_prefix'] + '/helpdesk/tickets/{}'.format(ticket['display_id'])
