@@ -61,7 +61,7 @@ Installation
    $ gunicorn ticketus.wsgi
    ```
 
-You must point your web server to serve files from `ticketus/static`, as gunicorn will not.
+8. You must point your web server to serve files from `ticketus/static`, as gunicorn will not.
 
 If you just wish to bring up the development server quickly for testing, run:
 
