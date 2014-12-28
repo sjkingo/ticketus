@@ -18,10 +18,17 @@ Requirements
 Installation
 ------------
 
+1. Install your distro's packages for Python 3, virtualenv, and psycopg2. For 
+   example, on Fedora:
+
+   ```
+   yum install python3 python-virtualenv python3-psycopg2
+   ```
+
 1. Activate a virtualenv (ensure it uses Python 3 as 2.x is not supported):
 
    ```
-   $ virtualenv -p python3 ticketus
+   $ virtualenv -p python3 --system-site-packages ticketus
    $ cd ticketus && source bin/activate
    ```
 
