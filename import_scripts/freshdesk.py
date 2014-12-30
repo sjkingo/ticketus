@@ -7,7 +7,6 @@ need to install them first using pip:
 
  * html2text
  * requests
- * pytz
 
 This is *not* a destructive operation. This script will not delete any existing
 tickets; instead each ticket will be created with the `imported_key` field set
@@ -35,7 +34,6 @@ import datetime
 from html2text import html2text
 import requests
 from requests.exceptions import HTTPError
-import pytz
 
 from django.contrib.auth.models import User
 from ticketus.core.models import *
