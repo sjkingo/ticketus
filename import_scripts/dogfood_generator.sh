@@ -5,4 +5,4 @@
 # You will probably want to create a new superuser after this runs.
 
 ../manage.py sqlflush | psql ticketus
-./github.py sjkingo ticketus
+./import_github.py sjkingo ticketus
