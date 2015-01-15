@@ -77,3 +77,10 @@ Installation
    ```
    $ python manage.py runserver
    ```
+
+LDAP authentication
+-------------------
+
+LDAP authentication is available by using the `django_auth_ldap3` library. Follow the 
+[installation instructions](https://github.com/sjkingo/django_auth_ldap3) to set up.
+
