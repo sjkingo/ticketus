@@ -84,3 +84,9 @@ LDAP authentication
 LDAP authentication is available by using the `django_auth_ldap3` library. Follow the 
 [installation instructions](https://github.com/sjkingo/django_auth_ldap3) to set up.
 
+Email gateway
+-------------
+
+Ticketus provides an email gateway for retrieving emails and importing them as
+tickets and comments. Currently there exists a backend for IMAP4 and it can be
+run as a cronjob.

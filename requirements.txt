@@ -1,6 +1,7 @@
 Django==1.7.3
 django-debug-toolbar==1.2.2
 django-grappelli==2.6.3
+email-reply-parser
 mistune==0.5
 psycopg2
 sqlparse==0.1.14
