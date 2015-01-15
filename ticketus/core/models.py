@@ -27,7 +27,7 @@ class TimestampModel(models.Model):
 class Ticket(TimestampModel):
     requester = models.ForeignKey(User)
     title = models.CharField(max_length=255)
-    imported_key = models.CharField(max_length=255, blank=True, unique=True)
+    imported_key = models.CharField(max_length=255, blank=True, null=True, unique=True)
 
     class Meta:
         verbose_name = 'Ticket'

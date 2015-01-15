@@ -42,7 +42,8 @@ def new_ticket(request, template='ui/new_ticket.html'):
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
-            t = Ticket(title=form.cleaned_data['title'], requester=request.user)
+            t = Ticket(title=form.cleaned_data['title'], requester=request.user,
+                    imported_key=None)
             t.save()
             t.add_tags(form.cleaned_data['tags'])
             if form.cleaned_data['raw_text']:
