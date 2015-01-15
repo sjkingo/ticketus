@@ -32,6 +32,6 @@ Some general considerations to note that apply to all import scripts:
 List of scripts
 ===============
 
-* [github.py](https://github.com/sjkingo/ticketus/blob/master/import_scripts/import_github.py) - import from a GitHub repo's issues
+* [ticketus_import_github](https://github.com/sjkingo/ticketus/blob/master/import_scripts/ticketus_import_github) - import from a GitHub repo's issues
 * [dogfood_generator.sh](https://github.com/sjkingo/ticketus/blob/master/import_scripts/dogfood_generator.sh) - syncs GitHub issues for Ticketus to the local database
-* [freshdesk.py](https://github.com/sjkingo/ticketus/blob/master/import_scripts/import_freshdesk.py) - import from a Freshdesk helpdesk
+* [ticketus_import_freshdesk](https://github.com/sjkingo/ticketus/blob/master/import_scripts/ticketus_import_freshdesk) - import from a Freshdesk helpdesk
