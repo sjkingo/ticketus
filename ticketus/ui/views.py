@@ -9,8 +9,11 @@ from ticketus.core.forms import *
 from ticketus.tags.models import tags_by_occurence_count
 
 def ticket_list_all(request):
-    results = Ticket.objects.all()
-    return render_ticket_list(request, results)
+    results = Ticket.objects.exclude(tag__tag_name='closed').all()
+    context = {'filter': '!= closed',
+               'filter_name': 'status',
+               'filter_label': 'with status'}
+    return render_ticket_list(request, results, context_to_add=context)
 
 def ticket_list_by_user(request, username):
     results = Ticket.objects.filter(requester__username=username).all()
