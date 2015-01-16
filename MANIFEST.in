@@ -1,0 +1,10 @@
+include CHANGELOG.md
+include LICENSE
+include README.md
+recursive-include ticketus/accounts/templates *.html
+recursive-include ticketus/tags/static *.css *.js
+recursive-include ticketus/tags/templates *.html
+recursive-include ticketus/ui/static *.css *.js
+recursive-include ticketus/ui/templates *.html
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

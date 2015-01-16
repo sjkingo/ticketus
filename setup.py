@@ -19,6 +19,8 @@ setup(
         'psycopg2',
         'python-dateutil',
     ],
+    zip_safe=False,
+    include_package_data=True,
     packages=find_packages(exclude=['ticketus_settings']),
     classifiers=[
         'Development Status :: 4 - Beta',
