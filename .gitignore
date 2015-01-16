@@ -1,5 +1,7 @@
 *.pyc
 *.swp
-local_settings.py
+/dist
 /ticketus.egg-info
 /ticketus_settings
+__pycache__
+local_settings.py
