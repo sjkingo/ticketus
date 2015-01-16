@@ -14,11 +14,6 @@ urlpatterns = patterns('',
 )
 
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-        (r'^__debug__/', include(debug_toolbar.urls)),
-    )
-
     # Serve media files in development. Note Django automatically serves
     # static files as the staticfiles app is active in settings.py.
     from django.conf.urls.static import static
