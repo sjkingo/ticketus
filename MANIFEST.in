@@ -1,6 +1,7 @@
 include CHANGELOG.md
 include LICENSE
 include README.md
+include ticketus/local_settings.py.example
 recursive-include ticketus/accounts/templates *.html
 recursive-include ticketus/tags/static *.css *.js
 recursive-include ticketus/tags/templates *.html
