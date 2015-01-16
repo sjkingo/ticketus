@@ -34,31 +34,27 @@ Installation
    $ cd ticketus && source bin/activate
    ```
 
-3. Install the latest "stable" release of ticketus from GitHub:
+3. Install the latest release from [PyPi](https://pypi.python.org/pypi/ticketus):
 
    ```
-   $ git clone https://github.com/sjkingo/ticketus.git
-   $ cd ticketus
-   $ git checkout v0.5-beta
+   $ pip install ticketus
    ```
 
-   (if you wish to use the latest bleeding-edge version, you may leave out the last line and instead use `master`.)
-
-4. Install the dependencies:
+4. Create a new Python package inside the virtualenv called `ticketus_settings` and copy the configuration to it:
 
    ```
-   $ pip install -r requirements.txt
+   $ mkdir ticketus_settings
+   $ touch ticketus_settings/__init__.py
+   $ cp lib/python-*/site-packages/ticketus/local_settings.py.example ticketus_settings/local_settings.py
    ```
 
-5. Edit the configuration (copy `ticketus/local_settings.py.example` to `ticketus/local_settings.py` and edit).
+5. Edit the settings and specify at least the database.
 
 6. Create and populate the database:
 
    ```
    $ createdb ticketus
-   $ python manage.py migrate
-   $ python manage.py collectstatic
-   $ python manage.py createsuperuser
+   $ ticketus init
    ```
 
 7. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
@@ -75,7 +71,7 @@ Installation
 10. If you just wish to bring up the development server quickly for testing, run:
 
    ```
-   $ python manage.py runserver
+   $ ticketus runserver
    ```
 
 LDAP authentication

@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ticketus.settings')
+import django
+django.setup()
+from django.core import management
+
+def run_init(args):
+    """
+    Execute our custom init management command in `ticketus.core.management.commands.init`.
+    """
+    management.call_command('init')
+
+def run_runserver(args):
+    """
+    Executes Django's runserver management command.
+    """
+    address = '{}:{}'.format(args.bind, args.port)
+    management.call_command('runserver', address)
+
+def ticketus_main():
+    _dispatch = {
+        'init': run_init,
+        'runserver': run_runserver,
+    }
+
+    def parse_args():
+        import argparse
+        parser = argparse.ArgumentParser(description='Ticketus is a simple, no-frills ticketing system for helpdesks.')
+        subparsers = parser.add_subparsers()
+
+        init = subparsers.add_parser('init')
+        init.set_defaults(cmd='init')
+
+        runserver = subparsers.add_parser('runserver')
+        runserver.set_defaults(cmd='runserver')
+        runserver.add_argument('--bind', default='127.0.0.1', help='Address to bind to')
+        runserver.add_argument('--port', default=8000, type=int, help='Port to bind to')
+
+        args = parser.parse_args()
+        if not hasattr(args, 'cmd'):
+            parser.print_help()
+            exit(1)
+
+        return args
+
+    args = parse_args()
+    _dispatch[args.cmd](args)
+
+
+if __name__ == '__main__':
+    ticketus_main()

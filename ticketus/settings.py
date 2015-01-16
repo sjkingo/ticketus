@@ -1,8 +1,21 @@
 """
 Django settings for ticketus project.
 
-Local site-specific settings can be found in local_settings.py
+DO NOT change anything in this file.
+
+Local site-specific settings should be created in a module called ticketus_settings.local_settings
 """
+
+# Production should not set this to True.
+DEBUG = False
+
+# Tuple of people who should get error emails when DEBUG=False
+ADMINS = (
+    ('Name', 'user@domain'),
+)
+
+# The secret key must be manually set in local_settings
+SECRET_KEY = '^gokpaa4h0-q4puln@eb!_zh^7xeh_nr%r865%epbx-(3go-kk'
 
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -71,7 +84,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'grappelli',
     'django.contrib.admin',
-    'debug_toolbar',
     'ticketus.core',
     'ticketus.ui',
     'ticketus.tags',
@@ -118,16 +130,9 @@ LOGGING = {
 
 TICKETS_PER_PAGE = 20
 
-# Django-debug-toolbar settings.
-INTERNAL_IPS = ('127.0.0.1',)
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-
 # Try and import the local_settings
 try:
-    from .local_settings import *
+    from ticketus_settings.local_settings import *
 except ImportError:
     pass
 
