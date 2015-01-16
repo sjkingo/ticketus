@@ -48,14 +48,16 @@ Installation
    $ cp lib/python-*/site-packages/ticketus/local_settings.py.example ticketus_settings/local_settings.py
    ```
 
-5. Edit the settings and specify at least the database.
+5. Edit the settings and specify at least the database and `BASE_DIR` (which should be set to the full path to the virtualenv).
 
 6. Create and populate the database:
 
    ```
    $ createdb ticketus
-   $ ticketus init
+   $ PYTHONPATH=. ticketus-admin init
    ```
+
+   Note when running `ticketus-admin`, you must set `PYTHONPATH` to the parent directory of where `ticketus_settings` is located.
 
 7. Optionally import some data (see [import_scripts/README.md](https://github.com/sjkingo/ticketus/blob/master/import_scripts/README.md) for more information).
 
@@ -66,12 +68,12 @@ Installation
    $ gunicorn ticketus.wsgi
    ```
 
-9. You must point your web server to serve files from `ticketus/static`, as gunicorn will not.
+9. You must point your web server to serve files from `static`, as gunicorn will not.
 
 10. If you just wish to bring up the development server quickly for testing, run:
 
    ```
-   $ ticketus runserver
+   $ PYTHONPATH=. ticketus-admin runserver
    ```
 
 LDAP authentication

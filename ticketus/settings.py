@@ -17,9 +17,6 @@ ADMINS = (
 # The secret key must be manually set in local_settings
 SECRET_KEY = '^gokpaa4h0-q4puln@eb!_zh^7xeh_nr%r865%epbx-(3go-kk'
 
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -40,25 +37,6 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = False
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# URL prefix for static files.
-# Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -131,10 +109,36 @@ LOGGING = {
 TICKETS_PER_PAGE = 20
 
 # Try and import the local_settings
+from django.core.exceptions import ImproperlyConfigured
 try:
     from ticketus_settings.local_settings import *
 except ImportError:
-    pass
+    raise ImproperlyConfigured('ticketus_settings.local_settings could not be imported')
+
+if 'BASE_DIR' not in globals():
+    raise ImproperlyConfigured('ticketus_settings.local_settings must define BASE_DIR')
 
 TEMPLATE_DEBUG = DEBUG
 MANAGERS = ADMINS
+
+import os.path
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/var/www/example.com/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://example.com/media/", "http://media.example.com/"
+MEDIA_URL = '/media/'
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# URL prefix for static files.
+# Example: "http://example.com/static/", "http://static.example.com/"
+STATIC_URL = '/static/'
+
