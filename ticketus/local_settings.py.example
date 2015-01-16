@@ -1,5 +1,6 @@
 """
 Django local site-specific settings for ticketus project.
+This must be placed in a module called ticketus_settings as local_settings.py
 """
 
 DEBUG = False
@@ -27,3 +28,6 @@ ALLOWED_HOSTS = []
 
 # Make this unique, and don't share it with anybody. The longer, the more random the better.
 SECRET_KEY = ''
+
+# The full path to the virtualenv that Ticketus is installed in.
+BASE_DIR = None
