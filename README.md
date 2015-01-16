@@ -5,11 +5,10 @@ Ticketus is a simple, no-frills ticketing system for helpdesks. For more
 information about its features and for a demo, see
 [ticketus.org](http://ticketus.org/).
 
-The latest "stable" release is `0.5-beta`. See the [CHANGELOG.md](https://github.com/sjkingo/ticketus/blob/master/CHANGELOG.md) for a list of changes in this version.
-
-It is licensed under the BSD license.
-
-[![Build Status](https://travis-ci.org/sjkingo/ticketus.svg)](https://travis-ci.org/sjkingo/ticketus) [![Requirements Status](https://requires.io/github/sjkingo/ticketus/requirements.svg?branch=master)](https://requires.io/github/sjkingo/ticketus/requirements/?branch=master)
+[![Latest Version](https://pypip.in/version/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
+[![Supported Python versions](https://pypip.in/py_versions/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
+[![Development Status](https://pypip.in/status/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
+[![License](https://pypip.in/license/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
 
 Requirements
 ------------
