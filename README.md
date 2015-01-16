@@ -1,7 +1,9 @@
 Ticketus
 ========
 
-Ticketus is a simple, no-frills ticketing system for helpdesks. For more information, see [ticketus.org](http://ticketus.org/).
+Ticketus is a simple, no-frills ticketing system for helpdesks. For more
+information about its features and for a demo, see
+[ticketus.org](http://ticketus.org/).
 
 The latest "stable" release is `0.5-beta`. See the [CHANGELOG.md](https://github.com/sjkingo/ticketus/blob/master/CHANGELOG.md) for a list of changes in this version.
 
@@ -13,7 +15,7 @@ Requirements
 ------------
 
 * Python 3.3+
-* PostgreSQL 9.3+
+* PostgreSQL 9.3+ and [psycopg2](http://initd.org/psycopg/)
 * WSGI server (e.g. gunicorn)
 * Web server (e.g. nginx or Apache2)
 
