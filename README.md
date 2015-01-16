@@ -47,7 +47,7 @@ Installation
    ```
    $ mkdir ticketus_settings
    $ touch ticketus_settings/__init__.py
-   $ cp lib/python-*/site-packages/ticketus/local_settings.py.example ticketus_settings/local_settings.py
+   $ cp lib/python*/site-packages/ticketus/local_settings.py.example ticketus_settings/local_settings.py
    ```
 
 5. Edit the settings and specify at least the database and `BASE_DIR` (which should be set to the full path to the virtualenv).
