@@ -5,10 +5,10 @@ Ticketus is a simple, no-frills ticketing system for helpdesks. For more
 information about its features and for a demo, see
 [ticketus.org](http://ticketus.org/).
 
-[![Latest Version](https://pypip.in/version/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
-[![Supported Python versions](https://pypip.in/py_versions/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
-[![Development Status](https://pypip.in/status/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
-[![License](https://pypip.in/license/ticketus/badge.svg)](https://pypi.python.org/pypi/ticketus/)
+[![Latest Version](https://img.shields.io/pypi/v/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
+[![Development Status](https://img.shields.io/pypi/status/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
+[![License](https://img.shields.io/pypi/l/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
 
 Requirements
 ------------
