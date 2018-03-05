@@ -1,9 +1,7 @@
 Ticketus
 ========
 
-Ticketus is a simple, no-frills ticketing system for helpdesks. For more
-information about its features and for a demo, see
-[ticketus.org](http://ticketus.org/).
+Ticketus is a simple, no-frills ticketing system for helpdesks.
 
 [![Latest Version](https://img.shields.io/pypi/v/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/ticketus.svg)](https://pypi.python.org/pypi/ticketus/)
